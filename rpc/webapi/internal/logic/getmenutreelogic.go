@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-20 16:19:29
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-21 13:55:20
+ * @LastEditTime : 2022-06-21 22:17:20
  * @FilePath     : \antd-pro-amis-server\rpc\webapi\internal\logic\getmenutreelogic.go
  */
 package logic
@@ -52,7 +52,7 @@ func listToTree(raw_data []virtualMenuTree, MenuID int) []virtualMenuTree {
 	return tree
 }
 
-func parseTree(tree []virtualMenuTree, is_child bool, parent_path string) []*webapi.GetMenuTreeReply_Data {
+func parseTree(tree []virtualMenuTree) []*webapi.GetMenuTreeReply_Data {
 	result := make([]*webapi.GetMenuTreeReply_Data, len(tree))
 
 	for i := 0; i < len(tree); i++ {
@@ -67,18 +67,14 @@ func parseTree(tree []virtualMenuTree, is_child bool, parent_path string) []*web
 				access: 'auth',
 				wrappers: ['@/wrappers/auth'],
 			*/
+			result[i].Icon = tree[i].Icon
 			result[i].Layout = true
 			result[i].Path = tree[i].Path
 			result[i].Name = tree[i].MenuName
-			result[i].Routes = parseTree(tree[i].Children, true, tree[i].Path)
+			result[i].Routes = parseTree(tree[i].Children)
 		} else {
-			/*
 
-			 */
-			if !is_child {
-				result[i].Access = "auth"
-				//result[i].Wrappers = []string{"@/wrappers/auth"}
-			}
+			result[i].Access = "auth"
 			result[i].Roles = tree[i].Roles
 			result[i].Path = tree[i].Path
 			result[i].Name = tree[i].MenuName
@@ -86,20 +82,19 @@ func parseTree(tree []virtualMenuTree, is_child bool, parent_path string) []*web
 			result[i].HideInMenu = tree[i].HideInMenu
 			result[i].Icon = tree[i].Icon
 			result[i].Component = "@/pages/Render"
-			//result[i].Component = "./Render"
 		}
 	}
-	if is_child {
-		tmp := []*webapi.GetMenuTreeReply_Data{}
-		//子级菜单需要添加一个重写路由在 0 位置
-		res := append(tmp, &webapi.GetMenuTreeReply_Data{
-			Path:     parent_path,
-			Layout:   true,
-			Redirect: result[0].Path,
-		})
-		res = append(res, result...)
-		result = res
-	}
+	// if is_child {
+	// 	tmp := []*webapi.GetMenuTreeReply_Data{}
+	// 	//子级菜单需要添加一个重写路由在 0 位置
+	// 	res := append(tmp, &webapi.GetMenuTreeReply_Data{
+	// 		Path:     parent_path,
+	// 		Layout:   true,
+	// 		Redirect: result[0].Path,
+	// 	})
+	// 	res = append(res, result...)
+	// 	result = res
+	// }
 
 	//不管是哪一组菜单都需要加上 404 页面
 	//result = append(result, &webapi.GetMenuTreeReply_Data{Component: "@/pages/404"})
@@ -119,7 +114,7 @@ func (l *GetMenuTreeLogic) GetMenuTree(in *webapi.GetMenuTreeReq) (*webapi.GetMe
 		}
 		tree := listToTree(raw_data, 0)
 
-		return &webapi.GetMenuTreeReply{Data: parseTree(tree, false, "")}, nil
+		return &webapi.GetMenuTreeReply{Data: parseTree(tree)}, nil
 	}
 
 }
