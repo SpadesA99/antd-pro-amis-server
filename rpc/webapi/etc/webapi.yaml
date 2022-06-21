@@ -1,0 +1,8 @@
+Name: webapi.rpc
+ListenOn: 127.0.0.1:8080
+Etcd:
+  Hosts:
+  - 10.1.7.98:2379
+  Key: webapi.rpc
+
+DataSource: yj:tgCFKeLM7DZbFp@tcp(rm-wz9isl7r0650x2pqm2o.mysql.rds.aliyuncs.com:3306)/amis_menu?parseTime=True  

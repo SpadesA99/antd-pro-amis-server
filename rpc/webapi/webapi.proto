@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package webapi;
+option go_package="./webapi";
+
+message MenuRoleReq{
+  string role_name = 2;
+}
+
+message MenuRoleReply{
+  int32 status = 1;
+  string msg = 2;
+}
+message GetMenuRoleReq{
+  int32 page = 1;
+  int32 perPage = 2;
+}
+message GetMenuRoleReply{
+  int32 status = 1;
+  string msg = 2;
+  message Data{
+    message List{
+      int32 ID = 1;
+      string role_name = 2;
+    }
+    repeated List items = 1;
+    int32 total = 2;
+  }
+  Data data = 3;
+}
+
+message GetAmisSchemaReq{
+  string router = 1;
+}
+
+message GetAmisSchemaReply{
+  int32 status = 1;
+  string msg = 2;
+  message Data{
+    string schema = 1;
+  }
+  Data data = 3;
+}
+
+message UpdateAmisSchemaReq{
+  string router = 1;
+  string schema = 2;
+}
+message UpdateAmisSchemaReply{
+  int32 status = 1;
+  string msg = 2;
+}
+message AddMenuReq{
+  string path = 1;
+  string icon = 2; 
+  string roles = 3;
+  int32 layout = 4;
+  int32 hideInMenu = 5;
+  int64 parent_id = 8;
+  string name = 6;
+  int32 is_group = 7;
+}
+message AddMenuReply{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message GetMenuReq{
+  int32 page = 1;
+  int32 perPage = 2;
+  int64 id = 3;
+  int64 parent_id = 5;
+}
+
+message GetMenuReply{
+  int32 status = 1;
+  string msg = 2;
+  message Data{
+    message List{
+      int32 id = 1;
+      string path = 2;
+      string icon = 3; 
+      string roles = 4;
+      int64 parent_id = 5;
+      int32 layout = 9;
+      int32 status = 10;
+      int32 hide_in_menu = 6;
+      string menu_name = 7;
+      int32 is_group = 8;
+    }
+    repeated List items = 1;
+    int32 total = 2;
+  }
+  Data data = 3;
+}
+
+message BulkDelMenuReq{
+  string ids = 1;
+}
+message DelMenuReq{
+  int32 id = 1;
+}
+message DelMenuReply{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message UpdateMenuReq{
+  int32 id = 1;
+  string path = 2;
+  string icon = 3; 
+  string roles = 4;
+  int32 layout = 5;
+  int32 hide_in_menu = 6;
+  string menu_name = 7;
+  int64 parent_id = 8;
+  int32 status = 9;
+}
+message UpdateMenuReply{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message OrderMenuReq{
+
+}
+
+message OrderMenuReply{
+  int32 status = 1;
+  string msg = 2;
+}
+
+message GetMenuTreeReq{
+  string roles = 4;
+}
+
+message GetMenuTreeReply{
+  message Data {
+    string path = 1;
+    bool layout = 2;
+    bool hideInMenu = 3;
+    bool status = 12;
+    string icon = 4;
+    string name = 5;
+    repeated string roles  = 6;
+    string access = 7;
+    string component  = 8;
+    repeated string wrappers = 9;
+    string redirect = 10;
+    repeated Data routes = 11;
+  }
+  repeated Data data = 4;
+}
+
+service Webapi {
+
+  //AmisSchema
+  //根据路由获取AmisSchema
+  rpc GetAmisSchema(GetAmisSchemaReq) returns(GetAmisSchemaReply);
+
+  //更新AmisSchema或者添加AmisSchema
+  rpc UpdateAmisSchema(UpdateAmisSchemaReq) returns(UpdateAmisSchemaReply);
+
+  //菜单角色管理
+  rpc AddMenuRole(MenuRoleReq) returns(MenuRoleReply);
+  rpc DelMenuRole(MenuRoleReq) returns(MenuRoleReply);
+  rpc GetMenuRole(GetMenuRoleReq) returns(GetMenuRoleReply);
+
+  //菜单管理
+  rpc AddMenu(AddMenuReq) returns(AddMenuReply);
+  rpc GetMenu(GetMenuReq) returns(GetMenuReply);
+  rpc DelMenu(DelMenuReq) returns(DelMenuReply);
+  rpc UpdateMenu(UpdateMenuReq) returns(UpdateMenuReply);
+  rpc BulkDelMenu(BulkDelMenuReq) returns(DelMenuReply);
+  rpc OrderMenu(OrderMenuReq) returns(OrderMenuReply);
+  rpc GetMenuTree(GetMenuTreeReq) returns(GetMenuTreeReply);
+}

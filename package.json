@@ -1,0 +1,10 @@
+{
+	"name": "build-tools",
+	"scripts": {
+		"swagger": "cd api_gateway && goctl api plugin -plugin goctl-swagger=\"swagger -filename server.json -host 127.0.0.1 \" -api ./doc/server_include.api -dir .",
+		"run-api": "cd server && go run server.go",
+		"run-rpc-webapi": "cd rpc && cd webapi && go run webapi.go",
+		"build-api": "cd server && goctl api go --api ./doc/server_include.api --dir .",
+		"build-rpc-webapi": "cd rpc && cd webapi && goctl rpc protoc webapi.proto --go_out=. --go-grpc_out=. --zrpc_out=."
+	}
+}

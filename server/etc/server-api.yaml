@@ -1,0 +1,10 @@
+Name: server-api
+Host: 0.0.0.0
+Port: 8888
+
+WebapiDsn:
+  Etcd:
+    Hosts:
+      - 10.1.7.98:2379
+    Key: webapi.rpc
+  Timeout: 200000

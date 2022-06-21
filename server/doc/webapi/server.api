@@ -1,0 +1,100 @@
+type AddMenuRolsRequest {
+	RoleName string  `json:"role_name"`
+} 
+
+type DelMenuRolsRequest {
+	RoleName string  `json:"role_name"`
+}
+
+type GetMenuRolsRequest{
+    Page int `form:"page"`
+    PerPage int `form:"perPage"`
+}
+
+type GetAmisSchemaRequest{
+	Router string `form:"router"`
+}
+
+type UpdateAmisSchemaRequest{
+	Router string `json:"router"`
+	Schema string `json:"schema"`
+}
+
+type AddMenuRequest{
+	Name string `json:"menu_name"`
+	Path string `json:"path"`
+	Icon string `json:"icon"`
+	Roles string `json:"roles"`
+	Layout int32 `json:"layout"`
+	ParentId int64  `json:"parent_id"`
+	HideInMenu int32 `json:"hide_in_menu"`
+}
+
+type GetMenuRequest {
+    Page int `form:"page"`
+    PerPage int `form:"perPage"`
+	ParentId *int64 `form:"parent_id,optional"`
+	Id *int64 `form:"id,optional"`
+}
+
+type DelMenuRequest {
+	Id int64 `json:"id"`
+}
+
+type UpdateMenuRequest {
+	Id int64 `json:"id"`
+	MenuName string `json:"menu_name"`
+	Path string `json:"path"`
+	Icon string `json:"icon"`
+	Roles string `json:"roles"`
+	Layout int `json:"layout"`
+	ParentId int  `json:"parent_id"`
+	HideInMenu int `json:"hide_in_menu"`
+}
+
+type BlukelMenuRequest {
+	Ids string `json:"ids"`
+}
+
+type GetMenuTreeRequest {
+	Roles string `form:"roles"`
+}
+
+@server(
+	prefix: v1
+)
+service server-api {
+
+	@handler AddMenuRolsHandler
+	post /add-menu-rols(AddMenuRolsRequest) returns ([]byte)
+
+	@handler DelMenuRolsHandler
+	post /del-menu-rols(DelMenuRolsRequest) returns ([]byte)
+
+	@handler GetMenuRolsHandler
+	get /get-menu-rols(GetMenuRolsRequest) returns ([]byte)
+
+	@handler GetAmisSchemaHandler
+	get /get-schema(GetAmisSchemaRequest) returns ([]byte)
+
+	@handler UpdateAmisSchemaHandler
+	post /update-schema(UpdateAmisSchemaRequest) returns ([]byte)
+
+	@handler AddMenuHandler
+	post /add-menu(AddMenuRequest) returns ([]byte)
+
+	@handler GetMenuHandler
+	get /get-menu(GetMenuRequest) returns ([]byte)
+
+	@handler DelMenuHandler
+	post /del-menu(DelMenuRequest) returns ([]byte)
+
+	@handler UpdateMenuHandler
+	post /update-menu(UpdateMenuRequest) returns ([]byte)
+
+	@handler BlukDelMenuHandler
+	post /bluk-del-menu(BlukelMenuRequest) returns ([]byte)
+
+	@handler GetMenuTreeHandler
+	get /get-menu-tree(GetMenuTreeRequest) returns ([]byte)
+}
