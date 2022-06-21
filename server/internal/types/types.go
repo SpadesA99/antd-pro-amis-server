@@ -34,10 +34,10 @@ type AddMenuRequest struct {
 }
 
 type GetMenuRequest struct {
-	Page     int    `form:"page"`
-	PerPage  int    `form:"perPage"`
 	ParentId *int64 `form:"parent_id,optional"`
 	Id       *int64 `form:"id,optional"`
+	Status   *int32 `form:"status,optional"`
+	Roles    string `form:"roles,optional"`
 }
 
 type DelMenuRequest struct {
@@ -53,6 +53,7 @@ type UpdateMenuRequest struct {
 	Layout     int    `json:"layout"`
 	ParentId   int    `json:"parent_id"`
 	HideInMenu int    `json:"hide_in_menu"`
+	Status     *int32 `json:"status"`
 }
 
 type BlukelMenuRequest struct {

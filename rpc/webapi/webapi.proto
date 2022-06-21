@@ -58,7 +58,6 @@ message AddMenuReq{
   int32 hideInMenu = 5;
   int64 parent_id = 8;
   string name = 6;
-  int32 is_group = 7;
 }
 message AddMenuReply{
   int32 status = 1;
@@ -66,10 +65,10 @@ message AddMenuReply{
 }
 
 message GetMenuReq{
-  int32 page = 1;
-  int32 perPage = 2;
   int64 id = 3;
   int64 parent_id = 5;
+  string roles = 8;
+  int32 status = 9;
 }
 
 message GetMenuReply{
@@ -82,11 +81,11 @@ message GetMenuReply{
       string icon = 3; 
       string roles = 4;
       int64 parent_id = 5;
-      int32 layout = 9;
-      int32 status = 10;
       int32 hide_in_menu = 6;
       string menu_name = 7;
-      int32 is_group = 8;
+      int32 layout = 8;
+      int32 status = 9;
+      repeated List children = 11;
     }
     repeated List items = 1;
     int32 total = 2;

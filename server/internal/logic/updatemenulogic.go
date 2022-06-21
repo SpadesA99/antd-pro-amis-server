@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-20 14:17:18
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-20 14:17:30
+ * @LastEditTime : 2022-06-21 15:47:58
  * @FilePath     : \antd-pro-amis-server\server\internal\logic\updatemenulogic.go
  */
 package logic
@@ -44,6 +44,12 @@ func (l *UpdateMenuLogic) UpdateMenu(req *types.UpdateMenuRequest) (resp []byte,
 	bpReq := webapi.UpdateMenuReq{}
 	if err := copier.Copy(&bpReq, req); err != nil {
 		return []byte{}, err
+	}
+	
+	if req.Status == nil {
+		bpReq.Status = -1
+	} else {
+		bpReq.Status = *req.Status
 	}
 
 	res, err := l.svcCtx.Webapi.UpdateMenu(l.ctx, &bpReq)

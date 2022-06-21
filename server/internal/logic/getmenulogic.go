@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-16 15:55:15
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-20 13:53:35
+ * @LastEditTime : 2022-06-21 15:22:28
  * @FilePath     : \antd-pro-amis-server\server\internal\logic\getmenulogic.go
  */
 package logic
@@ -56,6 +56,12 @@ func (l *GetMenuLogic) GetMenu(req *types.GetMenuRequest) (resp []byte, err erro
 		bpReq.ParentId = -1
 	} else {
 		bpReq.ParentId = *req.ParentId
+	}
+
+	if req.Status == nil {
+		bpReq.Status = -1
+	} else {
+		bpReq.Status = *req.Status
 	}
 
 	res, err := l.svcCtx.Webapi.GetMenu(l.ctx, &bpReq)
