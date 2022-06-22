@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-16 15:51:48
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-21 15:35:22
+ * @LastEditTime : 2022-06-22 15:27:10
  * @FilePath     : \antd-pro-amis-server\rpc\webapi\internal\logic\getmenulogic.go
  */
 package logic
@@ -54,6 +54,9 @@ func MlistToTree(raw_data []MvirtualMenuTree, MenuID int) []*webapi.GetMenuReply
 				Path:       v.Path,
 				ParentId:   v.ParentID,
 				Icon:       v.Icon,
+				Label:      v.Path,
+				Sort:       int32(v.Sort),
+				Value:      int32(v.ID),
 				Status:     int32(utils.IfThen(v.Status, 1, 0)),
 				Layout:     int32(utils.IfThen(v.Layout, 1, 0)),
 				HideInMenu: int32(utils.IfThen(v.HideInMenu, 1, 0)),

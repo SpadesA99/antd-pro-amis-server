@@ -71,6 +71,11 @@ func (s *WebapiServer) UpdateMenu(ctx context.Context, in *webapi.UpdateMenuReq)
 	return l.UpdateMenu(in)
 }
 
+func (s *WebapiServer) SortMenu(ctx context.Context, in *webapi.SortMenuReq) (*webapi.SortMenuReply, error) {
+	l := logic.NewSortMenuLogic(ctx, s.svcCtx)
+	return l.SortMenu(in)
+}
+
 func (s *WebapiServer) BulkDelMenu(ctx context.Context, in *webapi.BulkDelMenuReq) (*webapi.DelMenuReply, error) {
 	l := logic.NewBulkDelMenuLogic(ctx, s.svcCtx)
 	return l.BulkDelMenu(in)

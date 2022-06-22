@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-20 16:19:29
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-21 22:17:20
+ * @LastEditTime : 2022-06-22 14:10:25
  * @FilePath     : \antd-pro-amis-server\rpc\webapi\internal\logic\getmenutreelogic.go
  */
 package logic
@@ -72,6 +72,8 @@ func parseTree(tree []virtualMenuTree) []*webapi.GetMenuTreeReply_Data {
 			result[i].Path = tree[i].Path
 			result[i].Name = tree[i].MenuName
 			result[i].Routes = parseTree(tree[i].Children)
+
+			
 		} else {
 
 			result[i].Access = "auth"

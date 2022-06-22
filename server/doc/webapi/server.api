@@ -61,6 +61,15 @@ type GetMenuTreeRequest {
 	Roles string `form:"roles"`
 }
 
+type SortMenuRow {
+	Id int32 `json:"id"`
+	Sort int32 `json:"sort"`
+	Children []SortMenuRow `json:"children,optional"`
+}
+type SortMenuRequest{
+	Rows []SortMenuRow `json:"rows"`
+}
+
 @server(
 	prefix: v1
 )
@@ -98,4 +107,7 @@ service server-api {
 
 	@handler GetMenuTreeHandler
 	get /get-menu-tree(GetMenuTreeRequest) returns ([]byte)
+
+	@handler SortMenuHandler
+	post /sort-menu(SortMenuRequest) returns ([]byte)
 }

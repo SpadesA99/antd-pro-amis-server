@@ -85,6 +85,9 @@ message GetMenuReply{
       string menu_name = 7;
       int32 layout = 8;
       int32 status = 9;
+      string label = 10;
+      int32 value = 12;
+      int32 sort = 13;
       repeated List children = 11;
     }
     repeated List items = 1;
@@ -150,6 +153,19 @@ message GetMenuTreeReply{
   }
   repeated Data data = 4;
 }
+message SortMenuReq{
+  message Rows{
+    int32 id = 1;
+    int32 sort = 2;
+    repeated Rows children = 3;
+  }
+  repeated Rows rows = 1;
+}
+
+message SortMenuReply{
+  int32 status = 1;
+  string msg = 2;
+}
 
 service Webapi {
 
@@ -170,6 +186,7 @@ service Webapi {
   rpc GetMenu(GetMenuReq) returns(GetMenuReply);
   rpc DelMenu(DelMenuReq) returns(DelMenuReply);
   rpc UpdateMenu(UpdateMenuReq) returns(UpdateMenuReply);
+  rpc SortMenu(SortMenuReq) returns(SortMenuReply);
   rpc BulkDelMenu(BulkDelMenuReq) returns(DelMenuReply);
   rpc OrderMenu(OrderMenuReq) returns(OrderMenuReply);
   rpc GetMenuTree(GetMenuTreeReq) returns(GetMenuTreeReply);

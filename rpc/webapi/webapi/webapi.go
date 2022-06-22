@@ -25,6 +25,7 @@ type (
 		GetMenu(ctx context.Context, in *GetMenuReq, opts ...grpc.CallOption) (*GetMenuReply, error)
 		DelMenu(ctx context.Context, in *DelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error)
 		UpdateMenu(ctx context.Context, in *UpdateMenuReq, opts ...grpc.CallOption) (*UpdateMenuReply, error)
+		SortMenu(ctx context.Context, in *SortMenuReq, opts ...grpc.CallOption) (*SortMenuReply, error)
 		BulkDelMenu(ctx context.Context, in *BulkDelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error)
 		OrderMenu(ctx context.Context, in *OrderMenuReq, opts ...grpc.CallOption) (*OrderMenuReply, error)
 		GetMenuTree(ctx context.Context, in *GetMenuTreeReq, opts ...grpc.CallOption) (*GetMenuTreeReply, error)
@@ -88,6 +89,11 @@ func (m *defaultWebapi) DelMenu(ctx context.Context, in *DelMenuReq, opts ...grp
 func (m *defaultWebapi) UpdateMenu(ctx context.Context, in *UpdateMenuReq, opts ...grpc.CallOption) (*UpdateMenuReply, error) {
 	client := NewWebapiClient(m.cli.Conn())
 	return client.UpdateMenu(ctx, in, opts...)
+}
+
+func (m *defaultWebapi) SortMenu(ctx context.Context, in *SortMenuReq, opts ...grpc.CallOption) (*SortMenuReply, error) {
+	client := NewWebapiClient(m.cli.Conn())
+	return client.SortMenu(ctx, in, opts...)
 }
 
 func (m *defaultWebapi) BulkDelMenu(ctx context.Context, in *BulkDelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error) {

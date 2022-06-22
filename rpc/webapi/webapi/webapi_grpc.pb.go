@@ -36,6 +36,7 @@ type WebapiClient interface {
 	GetMenu(ctx context.Context, in *GetMenuReq, opts ...grpc.CallOption) (*GetMenuReply, error)
 	DelMenu(ctx context.Context, in *DelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error)
 	UpdateMenu(ctx context.Context, in *UpdateMenuReq, opts ...grpc.CallOption) (*UpdateMenuReply, error)
+	SortMenu(ctx context.Context, in *SortMenuReq, opts ...grpc.CallOption) (*SortMenuReply, error)
 	BulkDelMenu(ctx context.Context, in *BulkDelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error)
 	OrderMenu(ctx context.Context, in *OrderMenuReq, opts ...grpc.CallOption) (*OrderMenuReply, error)
 	GetMenuTree(ctx context.Context, in *GetMenuTreeReq, opts ...grpc.CallOption) (*GetMenuTreeReply, error)
@@ -130,6 +131,15 @@ func (c *webapiClient) UpdateMenu(ctx context.Context, in *UpdateMenuReq, opts .
 	return out, nil
 }
 
+func (c *webapiClient) SortMenu(ctx context.Context, in *SortMenuReq, opts ...grpc.CallOption) (*SortMenuReply, error) {
+	out := new(SortMenuReply)
+	err := c.cc.Invoke(ctx, "/webapi.Webapi/SortMenu", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *webapiClient) BulkDelMenu(ctx context.Context, in *BulkDelMenuReq, opts ...grpc.CallOption) (*DelMenuReply, error) {
 	out := new(DelMenuReply)
 	err := c.cc.Invoke(ctx, "/webapi.Webapi/BulkDelMenu", in, out, opts...)
@@ -175,6 +185,7 @@ type WebapiServer interface {
 	GetMenu(context.Context, *GetMenuReq) (*GetMenuReply, error)
 	DelMenu(context.Context, *DelMenuReq) (*DelMenuReply, error)
 	UpdateMenu(context.Context, *UpdateMenuReq) (*UpdateMenuReply, error)
+	SortMenu(context.Context, *SortMenuReq) (*SortMenuReply, error)
 	BulkDelMenu(context.Context, *BulkDelMenuReq) (*DelMenuReply, error)
 	OrderMenu(context.Context, *OrderMenuReq) (*OrderMenuReply, error)
 	GetMenuTree(context.Context, *GetMenuTreeReq) (*GetMenuTreeReply, error)
@@ -211,6 +222,9 @@ func (UnimplementedWebapiServer) DelMenu(context.Context, *DelMenuReq) (*DelMenu
 }
 func (UnimplementedWebapiServer) UpdateMenu(context.Context, *UpdateMenuReq) (*UpdateMenuReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateMenu not implemented")
+}
+func (UnimplementedWebapiServer) SortMenu(context.Context, *SortMenuReq) (*SortMenuReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SortMenu not implemented")
 }
 func (UnimplementedWebapiServer) BulkDelMenu(context.Context, *BulkDelMenuReq) (*DelMenuReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BulkDelMenu not implemented")
@@ -396,6 +410,24 @@ func _Webapi_UpdateMenu_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Webapi_SortMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SortMenuReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebapiServer).SortMenu(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/webapi.Webapi/SortMenu",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebapiServer).SortMenu(ctx, req.(*SortMenuReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Webapi_BulkDelMenu_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BulkDelMenuReq)
 	if err := dec(in); err != nil {
@@ -492,6 +524,10 @@ var Webapi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateMenu",
 			Handler:    _Webapi_UpdateMenu_Handler,
+		},
+		{
+			MethodName: "SortMenu",
+			Handler:    _Webapi_SortMenu_Handler,
 		},
 		{
 			MethodName: "BulkDelMenu",

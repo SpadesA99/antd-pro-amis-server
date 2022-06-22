@@ -63,3 +63,13 @@ type BlukelMenuRequest struct {
 type GetMenuTreeRequest struct {
 	Roles string `form:"roles"`
 }
+
+type SortMenuRow struct {
+	Id       int32         `json:"id"`
+	Sort     int32         `json:"sort"`
+	Children []SortMenuRow `json:"children,optional"`
+}
+
+type SortMenuRequest struct {
+	Rows []SortMenuRow `json:"rows"`
+}

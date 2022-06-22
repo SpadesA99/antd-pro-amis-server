@@ -67,6 +67,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/get-menu-tree",
 				Handler: GetMenuTreeHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/sort-menu",
+				Handler: SortMenuHandler(serverCtx),
+			},
 		},
 		rest.WithPrefix("/v1"),
 	)
