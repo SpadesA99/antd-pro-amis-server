@@ -2,7 +2,7 @@
  * @Author       : SpadesA.yanjuan9998@gmail.com
  * @Date         : 2022-06-22 15:32:43
  * @LastEditors  : SpadesA.yanjuan9998@gmail.com
- * @LastEditTime : 2022-06-22 15:56:23
+ * @LastEditTime : 2022-06-22 16:10:49
  * @FilePath     : \antd-pro-amis-server\rpc\webapi\internal\logic\sortmenulogic.go
  */
 package logic
@@ -11,7 +11,6 @@ import (
 	"context"
 	"sort"
 
-	"antd-pro-amis-server/rpc/ent/menu"
 	"antd-pro-amis-server/rpc/webapi/internal/svc"
 	"antd-pro-amis-server/rpc/webapi/webapi"
 
@@ -51,8 +50,7 @@ func (l *SortMenuLogic) SortMenu(in *webapi.SortMenuReq) (*webapi.SortMenuReply,
 	})
 
 	for i, v := range ids {
-		if err := l.svcCtx.Db.Menu.Update().
-			Where(menu.ID(int(v))).
+		if err := l.svcCtx.Db.Menu.UpdateOneID(int(v)).
 			SetSort(int64(sorts[i])).
 			Exec(context.Background()); err != nil {
 			return nil, err
